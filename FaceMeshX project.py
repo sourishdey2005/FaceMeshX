@@ -3,7 +3,7 @@ import mediapipe as mp
 import time
 from math import hypot
 
-# Initialize MediaPipe Face Mesh and drawing utils
+# Initialization of  MediaPipe Face Mesh and drawing utilitis 
 mp_face_mesh = mp.solutions.face_mesh
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -48,7 +48,7 @@ LEFT_EYE = [33, 160, 158, 133, 153, 144]
 RIGHT_EYE = [263, 387, 385, 362, 380, 373]
 
 EAR_THRESHOLD = 0.27
-SMILE_THRESHOLD = 3.5  # Adjust as needed
+SMILE_THRESHOLD = 3.5 
 HEAD_TILT_THRESHOLD = 0.02
 
 cap = cv2.VideoCapture(0)
@@ -71,7 +71,7 @@ while cap.isOpened():
         for face_landmarks in results.multi_face_landmarks:
             landmarks = face_landmarks.landmark
 
-            # Draw face mesh
+            #  face mesh
             mp_drawing.draw_landmarks(
                 image=frame,
                 landmark_list=face_landmarks,
@@ -94,7 +94,7 @@ while cap.isOpened():
                 connection_drawing_spec=mp_drawing_styles.get_default_face_mesh_iris_connections_style()
             )
 
-            # Head Direction Detection
+            # Head Direction Identification 
             left_eye = landmarks[33]
             right_eye = landmarks[263]
             nose_tip = landmarks[1]
@@ -111,7 +111,7 @@ while cap.isOpened():
 
             cv2.putText(frame, head_direction, (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 100, 100), 2)
 
-            # Head Tilt Detection
+            # Head Tilt Identification 
             eye_vertical_diff = left_eye.y - right_eye.y
             if eye_vertical_diff > HEAD_TILT_THRESHOLD:
                 head_tilt = "Head Tilt Right"
@@ -122,7 +122,7 @@ while cap.isOpened():
 
             cv2.putText(frame, head_tilt, (10, 130), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (100, 200, 255), 2)
 
-            # Eye Aspect Ratio (EAR) for eye open/closed
+            # Eye Aspect Ratio  for eye open/closed
             left_ear = eye_aspect_ratio(landmarks, LEFT_EYE)
             right_ear = eye_aspect_ratio(landmarks, RIGHT_EYE)
             avg_ear = (left_ear + right_ear) / 2.0
@@ -146,7 +146,7 @@ while cap.isOpened():
 
     cv2.putText(frame, f'FPS: {int(fps)}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    # Instructions
+    # Algorithms 
     cv2.putText(frame, 'Press S to Save Screenshot | Q to Quit', (10, h - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (100, 255, 255), 1)
 
     cv2.imshow('FaceMeshX - MediaPipe Advanced', frame)
